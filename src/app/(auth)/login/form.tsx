@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import authApiRequest from "@/apiRequests/auth";
+import { login } from "@/utils/actions/account";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -35,10 +36,11 @@ const LoginForm = () => {
   }: IAuthLoginCredentialsValidator) => {
     startTransition(async () => {
       try {
-        await authApiRequest.loginServer({
+        const response = await authApiRequest.login({
           email,
           password,
         });
+        await login(response.payload);
         router.replace("/");
         router.refresh();
       } catch (error: any) {
