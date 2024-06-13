@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/carousel";
 import Product from "./product";
 import productApiRequest from "@/apiRequests/product";
-import { error } from "console";
 
 const InfoShop = async ({ shopId }: { shopId: string }) => {
   const { payload: infoShop } = await shopApiRequest
