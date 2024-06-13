@@ -1,52 +1,72 @@
-import InfoUser from './InfoUser'
-import Link from 'next/link'
-import SearchBar from '../search-bar/SearchBar'
-import Notification from '../notification/Notification'
-import Cart from '../cart/Cart'
-import { Heart } from 'lucide-react'
-import { Icons } from './Icons'
-import SheetFeature from './SheetFeature'
+import Link from "next/link";
+import { Suspense } from "react";
+import { Heart, MessageCircle } from "lucide-react";
 
-const Navbar = () => {
+import InfoUser from "./InfoUser";
+import Cart from "../cart/Cart";
+import { Icons } from "./Icons";
+import SheetFeature from "./SheetFeature";
+import NavbarLayout from "./NavbarLayout";
+import { getMe } from "@/utils/actions/account";
+import SearchBar from "../search-bar/SearchBar";
+import NotificationHeader from "../notification/NotificationHeader";
+
+const Navbar = async () => {
+  let user = null;
+
+  try {
+    const response = await getMe();
+    user = response.payload;
+  } catch (error) {
+    user = null;
+  }
+
   return (
-    <div className="w-full bg-sky-500 fixed top-0 left-0 z-10">
-      <div className="flex flex-col container px-4 mx-auto py-2">
+    <NavbarLayout user={user}>
+      <section className="flex flex-col container px-4 py-2">
         <div className="hidden lg:flex items-center justify-between flex-col md:flex-row">
-          <div className="flex items-center gap-2 text-sm w-full">
+          <div className="flex items-center gap-4 text-sm w-full">
             <Link
-              href={'/banhang'}
+              href={`${process.env.NEXT_PUBLIC_MANAGER_URL}`}
               className="hover:text-white/70 text-white"
             >
               Kênh người bán
             </Link>
             <Link
-              href={'/seller/register'}
+              href={`${process.env.NEXT_PUBLIC_MANAGER_URL}/register`}
               className="hover:text-white/70 text-white"
             >
               Trở thành người bán
             </Link>
           </div>
           <div className="flex items-center gap-8 h-12 text-sm w-full justify-end">
-            <Notification />
-            <InfoUser />
+            <NotificationHeader user={user} />
+            <InfoUser user={user} />
           </div>
         </div>
         <div className="flex items-center gap-8 p-2">
-          <Link href={'/'}>
-            <Icons.logo className="h-10 w-10" />
+          <Link href={"/"}>
+            <Icons.logo className="h-16 w-16" />
           </Link>
-          <SearchBar />
+          <Suspense>
+            <SearchBar />
+          </Suspense>
           <div className="flex items-center gap-4 relative">
-            <Link href={'/wishlist'}>
+            <Link href={"/wishlist"}>
               <Heart className="text-white" />
             </Link>
-            <Cart />
-            <SheetFeature />
+            <Cart user={user} />
+            {user ? (
+              <Link href={"/messages"}>
+                <MessageCircle className="text-white" />
+              </Link>
+            ) : null}
+            <SheetFeature user={user} />
           </div>
         </div>
-      </div>
-    </div>
-  )
-}
+      </section>
+    </NavbarLayout>
+  );
+};
 
-export default Navbar
+export default Navbar;

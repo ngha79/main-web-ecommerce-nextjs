@@ -1,15 +1,24 @@
-import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar'
+import { ResponseExceptions } from "@/lib/utils";
+import { logout } from "@/utils/actions/account";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@radix-ui/react-dropdown-menu'
-import Link from 'next/link'
+} from "@radix-ui/react-dropdown-menu";
+import Link from "next/link";
+import { toast } from "sonner";
 
 const Users = ({ user }: { user: any }) => {
-  if (!user) return null
-  const handleLogoutAccount = async () => {}
+  if (!user) return null;
+  const handleLogoutAccount = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      toast.error(ResponseExceptions.DEFAULT_ERROR);
+    }
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center justify-center">
@@ -27,18 +36,12 @@ const Users = ({ user }: { user: any }) => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-20 bg-background rounded-md shadow-login        ">
-        <Link
-          href={'/user/account/profile'}
-          className="w-full bg-red-400"
-        >
+        <Link href={"/user/account/profile"} className="w-full bg-red-400">
           <DropdownMenuItem className="p-2 hover:bg-gray-200 outline-none rounded-md cursor-pointer">
             Tài khoản của tôi
           </DropdownMenuItem>
         </Link>
-        <Link
-          href={'/user/account/purchase'}
-          className="w-full bg-red-400"
-        >
+        <Link href={"/user/account/purchase"} className="w-full bg-red-400">
           <DropdownMenuItem className="p-2 hover:bg-gray-200 outline-none rounded-md cursor-pointer">
             Đơn mua
           </DropdownMenuItem>
@@ -51,7 +54,7 @@ const Users = ({ user }: { user: any }) => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;

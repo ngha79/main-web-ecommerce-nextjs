@@ -1,16 +1,19 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { Button } from '@/components/ui/button'
-import { Heart } from 'lucide-react'
-import { toast } from 'sonner'
-import wishlistApiRequest from '@/apiRequests/wishlist'
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Heart } from "lucide-react";
+import { toast } from "sonner";
+import wishlistApiRequest from "@/apiRequests/wishlist";
+import { HttpError } from "@/lib/http";
+import { ResponseExceptions } from "@/lib/utils";
+import { reFetchTag } from "@/utils/actions/tag";
 
 // import { QuickView } from './QuickView'
 
@@ -18,16 +21,21 @@ const HoverCard = ({ productId }: { productId: string }) => {
   const handleQuickViewProduct = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await wishlistApiRequest.addProductToWishlist({
         productId,
-      })
-      toast.success('Thêm sản phẩm vào danh sách yêu thích thành công.')
+      });
+      await reFetchTag("wishlist");
+      toast.success("Thêm sản phẩm vào danh sách yêu thích thành công.");
     } catch (error: any) {
-      toast.error(error.payload.message)
+      if (error instanceof HttpError) {
+        toast.error(error.payload.message);
+      } else {
+        toast.error(ResponseExceptions.DEFAULT_ERROR);
+      }
     }
-  }
+  };
 
   return (
     <div
@@ -55,7 +63,7 @@ const HoverCard = ({ productId }: { productId: string }) => {
         </Tooltip>
       </TooltipProvider>
     </div>
-  )
-}
+  );
+};
 
-export default HoverCard
+export default HoverCard;

@@ -1,35 +1,49 @@
-import http from '@/lib/http'
-import { AccountResType } from '@/schemaValidations/account.schema'
+import http from "@/lib/http";
+import { AccountResType } from "@/schemaValidations/account.schema";
 
 const accountApiRequest = {
-  me: (accessToken: string) =>
-    http.get<AccountResType>('users/me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+  me: () =>
+    http.get<AccountResType>("users/me", {
+      token: true,
     }),
-  meClient: () => http.get<AccountResType>('users/me'),
   getProfileUser: (id: string) =>
     http.get<any>(`users/profile/${id}`, {
-      cache: 'no-store',
+      cache: "no-store",
     }),
-  updateProfile: (body: any) => http.put<any>(`users`, body),
-  handleDeleteAddress: (id: number) => http.delete<any>(`/address/${id}`, {}),
+  updateProfile: (body: any) =>
+    http.put<any>(`users`, body, {
+      token: true,
+    }),
+  handleDeleteAddress: (id: number) =>
+    http.delete<any>(
+      `/address/${id}`,
+      {},
+      {
+        token: true,
+      }
+    ),
   handleUpdateAddress: (data: {
-    userName?: string
-    phoneNumber?: string
-    address?: string
-    isAddressDefault?: boolean
-    id: number
-  }) => http.put<any>(`/address/${data.id}`, data, {}),
-  handleGetListAddress: (accessToken: string) =>
-    http.get<any>(`address`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+    userName?: string;
+    phoneNumber?: string;
+    address?: string;
+    isAddressDefault?: boolean;
+    id: number;
+  }) =>
+    http.put<any>(`/address/${data.id}`, data, {
+      token: true,
     }),
-  handleCreateNewAddress: (body: any) => http.post<any>(`address`, body),
-  handleChangePassword: (body: any) => http.put<any>(`/users/password`, body),
-}
+  handleGetListAddress: () =>
+    http.get<any>(`address`, {
+      token: true,
+    }),
+  handleCreateNewAddress: (body: any) =>
+    http.post<any>(`address`, body, {
+      token: true,
+    }),
+  handleChangePassword: (body: any) =>
+    http.put<any>(`/users/password`, body, {
+      token: true,
+    }),
+};
 
-export default accountApiRequest
+export default accountApiRequest;

@@ -1,4 +1,5 @@
-import http from '@/lib/http'
+import http from "@/lib/http";
+import { Shop } from "@/lib/interface";
 
 const shopApiRequest = {
   getShopByProduct: (productId: string) =>
@@ -8,7 +9,15 @@ const shopApiRequest = {
       `/shop?page=${page}&limit=${limit}&userName=${search}&isActive=active`,
       {}
     ),
-  getShopById: (shopId: string) => http.get<any>(`/shop/info/${shopId}`, {}),
-}
+  getShopById: (shopId: string) =>
+    http.get<Shop>(`/shop/info-shop/${shopId}`, {
+      cache: "no-store",
+    }),
+  checkIsFollow: (shopId: string) =>
+    http.get<any>(`/follow-users/user/${shopId}`, {
+      token: true,
+      cache: "no-store",
+    }),
+};
 
-export default shopApiRequest
+export default shopApiRequest;

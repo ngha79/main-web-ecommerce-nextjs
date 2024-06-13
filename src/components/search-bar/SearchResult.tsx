@@ -1,11 +1,15 @@
-import { ProductSearch } from '@/lib/interface'
-import Image from 'next/image'
-import Link from 'next/link'
+import { ProductSearch } from "@/lib/interface";
+import Image from "next/image";
+import Link from "next/link";
 
-const SearchResult = ({ resultSearch }: { resultSearch: ProductSearch[] }) => {
+const SearchResult = ({
+  searchResults,
+}: {
+  searchResults: ProductSearch[];
+}) => {
   return (
     <div className="absolute top-full hidden z-10 search-result group-active:flex flex-col left-0 w-full bg-background rounded-md shadow-login overflow-hidden">
-      {resultSearch?.map((product) => (
+      {searchResults?.map((product) => (
         <Link
           href={`/product/${product.id}`}
           key={product.id}
@@ -13,7 +17,7 @@ const SearchResult = ({ resultSearch }: { resultSearch: ProductSearch[] }) => {
         >
           <Image
             alt="thumb"
-            src={'/login.png'}
+            src={"/login.png"}
             width={30}
             height={30}
             className="border"
@@ -22,7 +26,7 @@ const SearchResult = ({ resultSearch }: { resultSearch: ProductSearch[] }) => {
         </Link>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default SearchResult
+export default SearchResult;

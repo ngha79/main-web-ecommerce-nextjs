@@ -1,25 +1,31 @@
-import { BrandProductType } from '@/lib/interface'
-import { slugCategory } from '@/utils/function'
-import Link from 'next/link'
-import React from 'react'
+import { BrandProductType } from "@/lib/interface";
+import { slugCategory } from "@/utils/function";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 const Category = () => {
+  const categoryList = BrandProductType;
+
   return (
-    <div className="flex flex-col gap-y-4 bg-white rounded-md w-full p-4">
-      <h1 className="uppercase text-lg">Danh mục</h1>
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-        {BrandProductType.map((cate, i) => (
-          <Link
-            key={i}
-            href={`/category/${slugCategory(cate)}`}
-            className="bg-blue-100 h-24 rounded-md flex items-center justify-center hover:bg-blue-200 text-sm md:text-base p-6 text-center"
-          >
-            {cate}
-          </Link>
-        ))}
+    <div className="md:sticky max-h-[calc(100vh-144px)] top-28 lg:top-36 md:max-w-64">
+      <div className="overflow-y-scroll scrollbar-hide bg-background p-2 rounded-md shadow-md">
+        <h1 className="font-medium p-2">Danh mục</h1>
+        <div className="md:flex md:flex-col gap-2 h-max grid grid-cols-2 sm:grid-cols-3">
+          {categoryList.map((category, index) => (
+            <Link
+              key={index}
+              href={`/category/${slugCategory(category)}`}
+              className="p-2 hover:bg-gray-200 rounded-md text-[15px] flex items-center gap-2"
+            >
+              <Image alt="logo" src={"/login.png"} width={32} height={32} />
+              {category}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Category
+export default Category;
