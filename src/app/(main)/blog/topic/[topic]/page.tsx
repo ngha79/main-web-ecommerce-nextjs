@@ -4,13 +4,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import ListBlog from "../../_component/ListBlog";
 
-const Blog = async ({
-  params,
-  searchParams,
-}: {
-  params: { topic: string };
-  searchParams: { page: string };
-}) => {
+const Blog = async () => {
   return (
     <section className="container py-4 space-y-4 h-full flex flex-col gap-4">
       <Link href={"/blog"} className={cn(buttonVariants(), "w-max")}>
@@ -18,7 +12,7 @@ const Blog = async ({
       </Link>
       <div className="min-h-96 h-full flex">
         <Suspense>
-          <ListBlog searchParams={searchParams} params={params} />
+          <ListBlog />
         </Suspense>
       </div>
     </section>

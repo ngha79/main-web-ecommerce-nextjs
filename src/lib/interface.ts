@@ -326,9 +326,9 @@ export interface IDiscount {
 }
 
 export interface GetListBlogParams {
-  page: string;
+  page: any;
   limit?: string;
-  search?: string;
-  author?: string;
-  topic?: string;
+  search?: any;
+  author?: any;
+  topic?: any;
 }

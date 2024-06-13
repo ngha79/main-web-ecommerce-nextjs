@@ -1,8 +1,8 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ListSubject from "./_component/ListSubject";
 import ListBlog from "./_component/ListBlog";
 
-const Blog = async ({ searchParams }: { searchParams: { page: string } }) => {
+const Blog = () => {
   return (
     <section className="container py-4 md:px-8 space-y-4 size-full">
       <ListSubject />
@@ -10,7 +10,7 @@ const Blog = async ({ searchParams }: { searchParams: { page: string } }) => {
         <h1 className="font-medium text-lg">Danh sách bài viết</h1>
       </div>
       <div className="min-h-96 h-full flex">
-        <ListBlog searchParams={searchParams} />
+        <ListBlog />
       </div>
     </section>
   );

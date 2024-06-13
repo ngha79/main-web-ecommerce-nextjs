@@ -24,7 +24,10 @@ const Page = async ({
       status: searchParams.type === "all" ? undefined : searchParams.type,
     });
   } catch (error) {
-    throw new Error();
+    if (error instanceof HttpError) {
+      throw new Error();
+    }
+    return null;
   }
 
   return (
