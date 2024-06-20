@@ -8,7 +8,7 @@ const ListSubject = async () => {
     const response = await getListTopicBlog();
     topicBlog = response.payload;
   } catch (error) {
-    throw new Error();
+    return null;
   }
   return (
     <div className="space-y-4">

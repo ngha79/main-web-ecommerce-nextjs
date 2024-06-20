@@ -6,6 +6,7 @@ export const getListTopicBlog = async () => {
   return await http.get<any[]>("/blog/topic", {
     next: {
       tags: ["topics"],
+      revalidate: 3600,
     },
   });
 };

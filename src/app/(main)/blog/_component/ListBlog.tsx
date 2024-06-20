@@ -1,32 +1,24 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import React from "react";
 
 import Blogs from "./Blogs";
 import { getListBlog } from "@/utils/actions/blog";
 
-const ListBlog = () => {
-  const params = useParams();
-  const { topic, author } = params;
-  const [blogs, setBlogs] = useState<any[]>();
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await getListBlog({
-          page: 1,
-          topic,
-          author,
-        });
-        setBlogs(response.payload.data);
-      } catch (error) {
-        return null;
-      }
-    }
-    fetchData();
-  }, [topic, author]);
-
+const ListBlog = async ({
+  params,
+}: {
+  params: { topic?: string; author?: string };
+}) => {
+  let blogs = null;
+  try {
+    const response = await getListBlog({
+      page: 1,
+      topic: params?.topic,
+      author: params?.author,
+    });
+    blogs = response.payload.data;
+  } catch (error) {
+    return null;
+  }
   return (
     <div className="flex flex-col gap-4 min-h-[550px]">
       <div className="flex items-center justify-between">

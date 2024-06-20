@@ -1,8 +1,9 @@
+"use client";
+
 import React, { useCallback, useEffect, useState, useTransition } from "react";
 import BlogIntro from "./BlogIntro";
 import { useInView } from "react-intersection-observer";
-import { IResponsePagination } from "@/utils/types/response-pagination";
-import http, { HttpError } from "@/lib/http";
+import { HttpError } from "@/lib/http";
 import { getListBlog } from "@/utils/actions/blog";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
