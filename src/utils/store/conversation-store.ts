@@ -71,7 +71,6 @@ const setMessagesPagination = (
     const messagesConversation = [...state.conversation?.messages, ...messages];
     conversation.messages = messagesConversation;
     conversation.page = page;
-    console.log(messagesConversation.length);
     return {
       ...state,
       conversation,

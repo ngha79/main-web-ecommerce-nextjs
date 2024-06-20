@@ -27,7 +27,6 @@ const Shop = ({ shop, productItems, discount }: IShopCheckout) => {
             total_price_apply,
             price,
           } = product;
-          console.log(product);
           return (
             <div
               className="grid grid-cols-7 py-4 px-6 justify-center items-center hover:bg-gray-100"

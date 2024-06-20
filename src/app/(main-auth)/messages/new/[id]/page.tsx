@@ -25,13 +25,11 @@ const Page = () => {
       setShop(response.payload);
     } catch (error) {
       if (error instanceof HttpError) {
-        console.log(error.payload);
-        //   if (error.status === 404) {
-        //     return router.replace("/messages");
-        //   }
+        if (error.status === 404) {
+          return router.replace("/messages");
+        }
       }
-      //   throw new Error();
-      console.log(error);
+      throw new Error();
     }
   };
 

@@ -24,7 +24,6 @@ const Page = async ({ searchParams }: { searchParams: SearchParams }) => {
       searchBy: sortBy,
       order: orderBy,
     });
-    console.log(products, searchParams);
     return (
       <div className="flex flex-col gap-4">
         <Search param={searchParams} />
