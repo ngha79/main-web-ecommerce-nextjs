@@ -1,3 +1,8 @@
+import { toast } from "sonner";
+import { useTransition } from "react";
+import { useParams } from "next/navigation";
+import { Copy, Eye, Pen, Reply, Smile, ThumbsUp, Trash } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -8,10 +13,6 @@ import http from "@/lib/http";
 import { ResponseExceptions } from "@/lib/utils";
 import { IMessage } from "@/types/conversations";
 import { useConversationStore } from "@/utils/store/conversation-store";
-import { Copy, Eye, Pen, Reply, Smile, ThumbsUp, Trash } from "lucide-react";
-import { useParams } from "next/navigation";
-import { useTransition } from "react";
-import { toast } from "sonner";
 
 const MessageOptions = ({
   message,

@@ -14,9 +14,13 @@ const ListSubject = async () => {
     <div className="space-y-4">
       <h1 className="font-medium text-lg">Danh sách chủ đề</h1>
       <div className="flex items-center justify-start gap-4">
-        {topicBlog?.map((topic: any) => (
-          <Topic topic={topic} key={topic.id} />
-        ))}
+        {topicBlog?.length ? (
+          topicBlog.map((topic: any) => <Topic topic={topic} key={topic.id} />)
+        ) : (
+          <div className="flex items-center justify-center flex-1 text-gray-700">
+            <span>Không tìm thấy chủ đề nào</span>
+          </div>
+        )}
       </div>
     </div>
   );

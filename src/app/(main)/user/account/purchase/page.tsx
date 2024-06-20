@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import type { Metadata } from "next";
 
-import ListPurchase from "../../../../../components/order/ListPurchase";
+import ListPurchase from "@/components/order/ListPurchase";
 import { HttpError } from "@/lib/http";
 import purchaseApiRequest from "@/apiRequests/purchase";
 
@@ -29,7 +29,6 @@ const Page = async ({
     }
     return null;
   }
-
   return (
     <ListPurchase listOrders={listOrders.payload} searchParams={searchParams} />
   );

@@ -14,15 +14,15 @@ const Conversation = ({ conversation }: { conversation: IConversation }) => {
       className="flex items-center group relative p-2 gap-2 hover:bg-gray-100 rounded-md"
     >
       <Image
-        alt="avatar user"
-        src={conversation.user.avatar || "/login.png"}
+        alt="avatar shop"
+        src={conversation.shop.avatar || "/login.png"}
         width={64}
         height={64}
         className="w-16 h-16 rounded-full"
       />
       <div className="flex flex-col">
         <h3 className="font-medium max-w-24 truncate text-[15px]">
-          {conversation.user.userName}
+          {conversation.shop.userName}
         </h3>
         {conversation?.latestMessage?.deletedAt ? (
           <span className="text-xs text-gray-700">

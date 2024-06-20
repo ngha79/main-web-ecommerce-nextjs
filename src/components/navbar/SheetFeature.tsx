@@ -3,10 +3,12 @@
 import {
   AlignJustify,
   Bell,
+  Heart,
   KeyRound,
   LogIn,
   LogOut,
   MapPin,
+  MessageCircle,
   ShoppingBag,
   Store,
   TicketPercent,
@@ -14,7 +16,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import {
   Sheet,
@@ -27,6 +29,8 @@ import {
 import { cn, ResponseExceptions } from "@/lib/utils";
 import { logout } from "@/utils/actions/account";
 import { toast } from "sonner";
+import { useContext } from "react";
+import { SocketContext } from "../contexts/SocketContext";
 
 const LoginForm = () => {
   return (
@@ -54,11 +58,16 @@ const LoginForm = () => {
 };
 
 const IsLogin = () => {
+  const router = useRouter();
   const pathName = usePathname();
   const isProfile = pathName.includes("/user/account");
+  const { socket } = useContext(SocketContext);
+
   const handleLogoutAccount = async () => {
     try {
       await logout();
+      router.push("/");
+      socket?.disconnect();
     } catch (error) {
       toast.error(ResponseExceptions.DEFAULT_ERROR);
     }
@@ -133,7 +142,7 @@ const IsLogin = () => {
               className={cn([
                 "p-2 flex items-center gap-2 outline-none rounded-md cursor-pointer",
                 ,
-                pathName === "/user/account/purchase"
+                pathName === "/user/account/vouchers"
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200",
               ])}
@@ -163,7 +172,13 @@ const IsLogin = () => {
           <SheetClose asChild>
             <Link
               href={"/user/account/profile"}
-              className="p-2 flex items-center gap-2 hover:bg-gray-200 outline-none rounded-md cursor-pointer"
+              className={cn([
+                "p-2 flex items-center gap-2 outline-none rounded-md cursor-pointer",
+                ,
+                pathName === "/user/account/profile"
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200",
+              ])}
             >
               <User size={18} />
               Tài khoản của tôi
@@ -172,7 +187,13 @@ const IsLogin = () => {
           <SheetClose asChild>
             <Link
               href={"/user/account/purchase"}
-              className="p-2 flex items-center gap-2 hover:bg-gray-200 outline-none rounded-md cursor-pointer"
+              className={cn([
+                "p-2 flex items-center gap-2 outline-none rounded-md cursor-pointer",
+                ,
+                pathName === "/user/account/purchase"
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200",
+              ])}
             >
               <ShoppingBag size={18} />
               Đơn mua
@@ -181,7 +202,13 @@ const IsLogin = () => {
           <SheetClose asChild>
             <Link
               href={"/user/account/notifications"}
-              className="p-2 flex items-center gap-2 hover:bg-gray-200 outline-none rounded-md cursor-pointer"
+              className={cn([
+                "p-2 flex items-center gap-2 outline-none rounded-md cursor-pointer",
+                ,
+                pathName === "/user/account/notifications"
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200",
+              ])}
             >
               <Bell size={18} />
               Thông báo
@@ -189,7 +216,36 @@ const IsLogin = () => {
           </SheetClose>
         </>
       )}
-
+      <SheetClose asChild>
+        <Link
+          href={"/wishlist"}
+          className={cn([
+            "p-2 flex items-center gap-2 outline-none rounded-md cursor-pointer",
+            ,
+            pathName === "/wishlist"
+              ? "bg-blue-500 text-white"
+              : "hover:bg-gray-200",
+          ])}
+        >
+          <Heart size={18} />
+          Sản phẩm yêu thích
+        </Link>
+      </SheetClose>
+      <SheetClose asChild>
+        <Link
+          href={"/messages"}
+          className={cn([
+            "p-2 flex items-center gap-2 outline-none rounded-md cursor-pointer",
+            ,
+            pathName === "/messages"
+              ? "bg-blue-500 text-white"
+              : "hover:bg-gray-200",
+          ])}
+        >
+          <MessageCircle size={18} />
+          Tin nhắn
+        </Link>
+      </SheetClose>
       <SheetClose asChild>
         <div
           className="p-2 flex items-center gap-2 hover:bg-gray-200 outline-none rounded-md cursor-pointer"

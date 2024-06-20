@@ -1,10 +1,12 @@
+import { toast } from "sonner";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { toast } from "sonner";
+
+import Conversation from "./Conversation";
 import http, { HttpError } from "@/lib/http";
 import { ResponseExceptions } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 import { IResponsePagination } from "@/utils/types/response-pagination";
-import Conversation from "./Conversation";
 import { useConversationStore } from "@/utils/store/conversation-store";
 
 const GetNextConversation = () => {
@@ -44,14 +46,12 @@ const GetNextConversation = () => {
       ))}
       <div ref={ref}>
         {nextPage ? (
-          <div className="flex items-center justify-center pt-8">
-            <div
-              className="inline-block text-gray-700 h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-              role="status"
-            >
-              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                Loading...
-              </span>
+          <div className="flex items-center gap-2 rounded-md shadow-md p-2 bg-gray-200 animate-pulse">
+            <Skeleton className="w-16 h-16 rounded-full" />
+            <div className="flex flex-col gap-1">
+              <Skeleton className="h-5 w-20 rounded-md" />
+              <Skeleton className="h-4 w-20 rounded-md" />
+              <Skeleton className="h-4 w-20 rounded-md" />
             </div>
           </div>
         ) : null}

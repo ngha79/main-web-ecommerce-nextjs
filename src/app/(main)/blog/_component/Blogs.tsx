@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useCallback, useTransition } from "react";
-import { IConversation } from "@/types/conversations";
+import React, { useCallback, useEffect, useState, useTransition } from "react";
+import BlogIntro from "./BlogIntro";
 import { useInView } from "react-intersection-observer";
 import { IResponsePagination } from "@/utils/types/response-pagination";
 import http, { HttpError } from "@/lib/http";
+import { getListBlog } from "@/utils/actions/blog";
+import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { ResponseExceptions } from "@/lib/utils";
-import { useConversationStore } from "@/utils/store/conversation-store";
-import Message from "./Message";
 
-const Messages = ({ conversation }: { conversation: IConversation }) => {
-  const [messages, setMessages] = useState<any[]>([]);
-  const [nextPage, setNextPage] = useState<number | null | undefined>(
-    conversation.page
-  );
+const Blogs = ({ blogs }: { blogs: any[] }) => {
+  const params = useParams();
+  const { topic, author } = params;
+
+  const [blogList, setBLogs] = useState<any[]>([]);
+  const [nextPage, setNextPage] = useState<number | null | undefined>(2);
   const [isLoading, startLoading] = useTransition();
 
   const { ref, inView } = useInView({
@@ -20,22 +21,17 @@ const Messages = ({ conversation }: { conversation: IConversation }) => {
     rootMargin: "0px",
   });
 
-  const setMessagesPagination = useConversationStore(
-    (state) => state.setMessagesPagination
-  );
   const handleFetch = useCallback(() => {
     if (isLoading || !nextPage) return;
     startLoading(async () => {
       try {
-        const res = await http.get<IResponsePagination>(
-          `/conversation/messages-all?page=${nextPage}&limit=20&conversationId=${conversation.id}`
-        );
-        setMessagesPagination(
-          res.payload.data,
-          conversation.id,
-          res.payload.nextPage
-        );
-        setNextPage(res.payload.nextPage);
+        const response = await getListBlog({
+          page: nextPage,
+          topic,
+          author,
+        });
+        setBLogs((prev) => [...prev, ...response.payload.data]);
+        setNextPage(response.payload.nextPage);
       } catch (error) {
         if (error instanceof HttpError) {
           toast.error(error.payload.message);
@@ -44,22 +40,21 @@ const Messages = ({ conversation }: { conversation: IConversation }) => {
         }
       }
     });
-  }, [isLoading, nextPage, conversation.id, setMessagesPagination]);
-
-  useEffect(() => {
-    setMessages(conversation.messages);
-  }, [conversation.messages]);
+  }, [author, isLoading, nextPage, topic]);
 
   useEffect(() => {
     if (inView && nextPage) {
       handleFetch();
     }
-  }, [inView, nextPage]);
+  }, [inView, nextPage, handleFetch]);
 
   return (
     <div className="flex overflow-auto flex-col-reverse h-full">
-      {messages.map((message) => (
-        <Message message={message} key={message.id} />
+      {blogs.map((blog: any) => (
+        <BlogIntro blog={blog} key={blog.id} />
+      ))}
+      {blogList.map((blog: any) => (
+        <BlogIntro blog={blog} key={blog.id} />
       ))}
       <div ref={ref}>
         {isLoading ? (
@@ -79,4 +74,4 @@ const Messages = ({ conversation }: { conversation: IConversation }) => {
   );
 };
 
-export default Messages;
+export default Blogs;

@@ -1,11 +1,10 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { IProductItems, IShopCheckout } from "@/lib/interface";
-import { cn } from "@/lib/utils";
-import { MessageCircle } from "lucide-react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
 import AddVoucher from "./add-voucher";
+import ButtonChat from "@/components/conversation/ButtonChat";
+import { IProductItems, IShopCheckout } from "@/lib/interface";
 
 const Shop = ({ shop, productItems, discount }: IShopCheckout) => {
   return (
@@ -17,16 +16,7 @@ const Shop = ({ shop, productItems, discount }: IShopCheckout) => {
         >
           {shop?.userName}
         </Link>
-        <Link
-          href={`/shop/${shop?.id}`}
-          className={cn([
-            buttonVariants({ variant: "ghost" }),
-            "text-green-500 hover:text-green-600",
-          ])}
-        >
-          <MessageCircle size={20} />
-          Chat ngay
-        </Link>
+        <ButtonChat shopId={shop?.id} />
       </div>
       <div className="flex flex-col gap-2">
         {productItems?.map((product: IProductItems, index: number) => {

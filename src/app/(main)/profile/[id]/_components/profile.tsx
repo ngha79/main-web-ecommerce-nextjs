@@ -52,7 +52,7 @@ const Profile = ({ profileUser, profileUserId }: any) => {
           <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">
             <label className="line-clamp-1">Đánh Giá</label>
             <span className="text-private line-clamp-1">
-              {profileUser.totalCommentCount}
+              {profileUser.totalcommentcount}
             </span>
           </div>
           <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">

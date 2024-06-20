@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import ButtonChat from "../conversation/ButtonChat";
 
 const StatusOrder: { [key: string]: { message: string; status: string } } = {
   pending: {
@@ -68,9 +69,7 @@ const Order = ({ order }: { order: IListOrder }) => {
             <span className="text-sm font-medium line-clamp-1 w-20 md:w-max">
               {orderState?.shop?.userName}
             </span>
-            <Button variant="destructive" size="sm">
-              Chat
-            </Button>
+            <ButtonChat shopId={orderState?.shop?.id} />
             <Link
               className={cn([
                 buttonVariants({ variant: "outline", size: "sm" }),

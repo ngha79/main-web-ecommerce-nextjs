@@ -10,13 +10,13 @@ interface NavbarLayoutProps {
 }
 
 const NavbarLayout = ({ children, user }: NavbarLayoutProps) => {
-  const { socket, setUser } = useContext(SocketContext);
+  const { setUser } = useContext(SocketContext);
 
   useEffect(() => {
-    if (user && socket) {
+    if (user) {
       setUser(user);
     }
-  }, [setUser, socket, user]);
+  }, [setUser, user]);
 
   return (
     <nav className="lg:min-h-36 bg-cyan-500 min-h-24 fixed top-0 left-0 z-10 w-full">

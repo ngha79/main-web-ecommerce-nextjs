@@ -97,10 +97,10 @@ export interface Shop {
   shop_background: string;
   shop_createdAt: Date;
   shop_updatedAt: Date;
-  productCount: string;
-  followersCount: string;
-  totalLikeCount: string;
-  totalCommentCount: string;
+  productcount: string;
+  followerscount: string;
+  totallikecount: string;
+  totalcommentcount: string;
 }
 
 export const BrandProductType = [
@@ -282,7 +282,7 @@ export interface IAddressOrder {
 }
 
 export interface IShopOrder {
-  id: number;
+  id: string;
   background: string;
   avatar: string;
   userName: string;

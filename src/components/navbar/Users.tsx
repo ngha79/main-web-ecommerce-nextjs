@@ -1,20 +1,24 @@
-import { ResponseExceptions } from "@/lib/utils";
-import { logout } from "@/utils/actions/account";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+import { ResponseExceptions } from "@/lib/utils";
+import { logout } from "@/utils/actions/account";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const Users = ({ user }: { user: any }) => {
+  const router = useRouter();
   if (!user) return null;
   const handleLogoutAccount = async () => {
     try {
       await logout();
+      router.push("/");
     } catch (error) {
       toast.error(ResponseExceptions.DEFAULT_ERROR);
     }

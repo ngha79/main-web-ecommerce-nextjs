@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 
-import http from "@/lib/http";
+import http, { HttpError } from "@/lib/http";
 import FollowShop from "./FollowShop";
 import UnFollowShop from "./UnFollowShop";
 import { Button } from "@/components/ui/button";
@@ -20,22 +20,21 @@ const Follow = ({ shopId }: { shopId: string }) => {
   const [isFollowing, setFollow] = useState<boolean>(false);
 
   useEffect(() => {
+    const handleCheckFollowing = async () => {
+      try {
+        const response = await http.get<any>(`/follow-users/${shopId}`, {
+          token: true,
+          cache: "no-store",
+        });
+        setFollow(response.payload);
+      } catch (error) {
+        setFollow(false);
+      }
+    };
     if (user) {
       handleCheckFollowing();
     }
-  }, [user]);
-
-  const handleCheckFollowing = async () => {
-    try {
-      const response = await http.get<any>(`/follow-users/${shopId}`, {
-        token: true,
-        cache: "no-store",
-      });
-      setFollow(response.payload);
-    } catch (error) {
-      setFollow(false);
-    }
-  };
+  }, [shopId, user]);
 
   const handleSetIsFollowing = (isFollowing: boolean) => {
     setFollow(isFollowing);
@@ -46,10 +45,13 @@ const Follow = ({ shopId }: { shopId: string }) => {
       const response = await http.get<any>(`/conversation/user/${shopId}`, {
         token: true,
       });
-      if (response.payload) {
-        router.push(`/messages/${response.payload.id}`);
-      }
+      router.push(`/messages/${response.payload.id}`);
     } catch (error) {
+      if (error instanceof HttpError) {
+        if (error.status === 404) {
+          return router.push(`/messages/new/${shopId}`);
+        }
+      }
       toast.error(ResponseExceptions.DEFAULT_ERROR);
     }
   };

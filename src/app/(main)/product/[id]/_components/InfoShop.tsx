@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { Shop } from "@/lib/interface";
+import ButtonChat from "@/components/conversation/ButtonChat";
 
 const InfoShop = ({ shop }: { shop: Shop }) => {
   return (
@@ -26,12 +27,7 @@ const InfoShop = ({ shop }: { shop: Shop }) => {
             <span className="text-sm text-gray-500">Online 3 Giờ Trước</span>
           </div>
           <div className="flex items-center gap-2">
-            <Button
-              className="border-private text-private hover:text-private/80 bg-private/10 hover:bg-private/5"
-              variant={"outline"}
-            >
-              Chat Ngay
-            </Button>
+            <ButtonChat shopId={shop.shop_id} />
             <Link href={`/shop/${shop.shop_id}`}>
               <Button className="" variant={"outline"}>
                 Xem Shop
@@ -44,7 +40,7 @@ const InfoShop = ({ shop }: { shop: Shop }) => {
         <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">
           <label className="line-clamp-1">Đánh Giá</label>
           <span className="text-private line-clamp-1">
-            {shop.totalCommentCount}
+            {shop.totalcommentcount}
           </span>
         </div>
         <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">
@@ -59,19 +55,19 @@ const InfoShop = ({ shop }: { shop: Shop }) => {
         <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">
           <label className="line-clamp-1">Sản Phẩm</label>
           <span className="text-private line-clamp-1">
-            {+shop.productCount}
+            {+shop.productcount}
           </span>
         </div>
         <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">
           <label className="line-clamp-1">Người Theo Dõi</label>
           <span className="text-private line-clamp-1">
-            {+shop.followersCount}
+            {+shop.followerscount}
           </span>
         </div>
         <div className="flex items-center text-sm justify-between md:justify-normal text-gray-500 gap-4 md:gap-8 lg:gap-16">
           <label className="line-clamp-1">Yêu thích sản phẩm</label>
           <span className="text-private line-clamp-1">
-            {+shop.totalLikeCount}
+            {+shop.totallikecount}
           </span>
         </div>
       </div>

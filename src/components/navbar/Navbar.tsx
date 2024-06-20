@@ -52,12 +52,12 @@ const Navbar = async () => {
             <SearchBar />
           </Suspense>
           <div className="flex items-center gap-4 relative">
-            <Link href={"/wishlist"}>
+            <Link href={"/wishlist"} className="hidden md:block">
               <Heart className="text-white" />
             </Link>
             <Cart user={user} />
             {user ? (
-              <Link href={"/messages"}>
+              <Link href={"/messages"} className="hidden md:block">
                 <MessageCircle className="text-white" />
               </Link>
             ) : null}

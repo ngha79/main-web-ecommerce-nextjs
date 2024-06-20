@@ -28,6 +28,14 @@ export default function LayoutSocket({
 
   useEffect(() => {
     if (!socket || !token) return;
+    const handleNewConversation = ({
+      conversation,
+    }: {
+      conversation: IConversation;
+    }) => {
+      conversationStore.newConversation(conversation);
+    };
+
     const handleMessage = ({ message, conversation }: IProps) => {
       conversationStore.newMessageConversation(message, conversation);
     };
@@ -44,12 +52,14 @@ export default function LayoutSocket({
       notificationStore.newNotification(notification);
     };
 
+    socket.on("newConversation", handleNewConversation);
     socket.on("onMessage", handleMessage);
     socket.on("onMessageUpdate", handleMessageUpdate);
     socket.on("onMessageDelete", handleMessageDelete);
     socket.on("onNotification", handleNotification);
 
     return () => {
+      socket.off("newConversation", handleMessage);
       socket.off("onMessage", handleMessage);
       socket.off("onMessageUpdate", handleMessageUpdate);
       socket.off("onMessageDelete", handleMessageDelete);
@@ -66,14 +76,11 @@ export default function LayoutSocket({
         "/conversation/user?page=1&limit=20&search=",
         {
           token: true,
-          next: {
-            revalidate: 3600,
-          },
         }
       );
       conversationStore.setConversations(data, nextPage);
     } catch (error) {
-      console.error("Error fetching conversations:", error);
+      console.error("Error fetching conversations:");
     } finally {
       conversationStore.setLoading(false);
     }
@@ -84,27 +91,23 @@ export default function LayoutSocket({
     try {
       const {
         payload: { data, nextPage },
-      } = await http.get<IResponsePagination>(
-        "/notifications?page=1&limit=20",
-        {
-          token: true,
-          next: {
-            revalidate: 3600,
-          },
-        }
-      );
+      } = await http.get<IResponsePagination>("/notifications?page=1&limit=1", {
+        token: true,
+      });
       notificationStore.setNotification(data, nextPage);
     } catch (error) {
-      console.error("Error fetching notifications:", error);
+      console.error("Error fetching notifications:");
     } finally {
       notificationStore.setLoading(false);
     }
   }
 
   useEffect(() => {
-    fetchConversations();
-    fetchNotifications();
-  }, []);
+    if (token) {
+      fetchConversations();
+      fetchNotifications();
+    }
+  }, [token]);
 
   return <>{children}</>;
 }

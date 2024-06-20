@@ -85,6 +85,20 @@ const updateMessageConversation = (
   conversationId: string | string[],
   state: State
 ) => {
+  if (state.conversation) {
+    if (state.conversation.id === conversationId) {
+      const newMessages = state.conversation.messages.map((msg) => {
+        if (msg.id === message.id) {
+          return message;
+        }
+        return msg;
+      });
+      return {
+        ...state,
+        conversation: { ...state.conversation, messages: newMessages },
+      };
+    }
+  }
   const updateConversation = state.conversations.map((item) => {
     if (item.id === conversationId) {
       const newUpdate = item.messages.map((msg) => {
@@ -109,6 +123,20 @@ const deleteMessageConversation = (
   conversationId: string | string[],
   state: State
 ) => {
+  if (state.conversation) {
+    if (state.conversation.id === conversationId) {
+      const newMessages = state.conversation.messages.map((msg) => {
+        if (msg.id === message.id) {
+          return message;
+        }
+        return msg;
+      });
+      return {
+        ...state,
+        conversation: { ...state.conversation, messages: newMessages },
+      };
+    }
+  }
   const updateConversation = state.conversations.map((item) => {
     if (item.id === conversationId) {
       const newUpdate = item.messages.map((msg) =>
@@ -138,6 +166,10 @@ const newMessageConversation = (
     (item) => item.id === conversation.id
   );
   if (!existingConversation) {
+    conversation.latestMessage = message;
+    if (!conversation.messages.find((msg) => msg.id === message.id)) {
+      conversation.messages = [message, ...conversation.messages];
+    }
     return {
       ...state,
       conversations: [conversation, ...state.conversations],
@@ -174,7 +206,7 @@ export const useConversationStore = create<IConversations>()((set) => ({
   newConversation: (conver) =>
     set((state) => ({
       ...state,
-      conversations: [...state.conversations, conver],
+      conversations: [conver, ...state.conversations],
     })),
   setConversation: (conver) => set((state) => setConversation(conver, state)),
   setConversations: (convers, page) =>

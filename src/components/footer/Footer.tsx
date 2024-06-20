@@ -16,21 +16,6 @@ const Footer = () => {
           <span className="text-xs text-gray-700 hover:underline">
             Gửi yêu cầu hỗ trợ
           </span>
-          <span className="text-xs text-gray-700 hover:underline">
-            Gửi yêu cầu hỗ trợ
-          </span>
-          <span className="text-xs text-gray-700 hover:underline">
-            Gửi yêu cầu hỗ trợ
-          </span>
-          <span className="text-xs text-gray-700 hover:underline">
-            Gửi yêu cầu hỗ trợ
-          </span>
-          <span className="text-xs text-gray-700 hover:underline">
-            Gửi yêu cầu hỗ trợ
-          </span>
-          <span className="text-xs text-gray-700 hover:underline">
-            Gửi yêu cầu hỗ trợ
-          </span>
         </div>
         <div className="flex flex-col gap-2 max-md:items-center justify-start h-full">
           <h1 className="text-lg font-medium mb-2">Về ShopDev</h1>
@@ -111,7 +96,7 @@ const Footer = () => {
       </div>
       <div className="container flex flex-col gap-4">
         <h1 className="text-lg font-medium">Danh Mục Sản Phẩm</h1>
-        <div className="grid gap-4 text-xs grid-cols-5 text-gray-700">
+        <div className="flex flex-wrap gap-x-8 gap-y-6 text-xs text-gray-700">
           {BrandProductType.map((cate, i) => (
             <Link
               key={i}

@@ -1,12 +1,13 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Input } from "@/components/ui/input";
 import useDebounce from "@/helpers/useDebounce";
 import PurchaseType from "./PurchaseType";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ListPurchase = ({
   listOrders,
@@ -38,7 +39,7 @@ const ListPurchase = ({
     const params = new URLSearchParams(searchParams);
     params.set("search", searchDebounce);
     router.replace(`${pathname}?${params.toString()}`);
-  }, [searchDebounce, pathname, router, searchParams]);
+  }, [searchDebounce, pathname]);
 
   return (
     <Tabs value={status} className="space-y-4">
@@ -96,6 +97,7 @@ const ListPurchase = ({
           placeholder="Bạn có thể tìm kiếm theo tên Shop, ID đơn hàng hoặc Tên Sản phẩm"
         />
       </div>
+
       <PurchaseType ordersData={listOrders} />
     </Tabs>
   );

@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import BlogIntro from "./BlogIntro";
+import { useParams } from "next/navigation";
+
+import Blogs from "./Blogs";
 import { getListBlog } from "@/utils/actions/blog";
-import { useParams, useSearchParams } from "next/navigation";
 
 const ListBlog = () => {
   const params = useParams();
   const { topic, author } = params;
-  const searchParams = useSearchParams();
   const [blogs, setBlogs] = useState<any[]>();
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await getListBlog({
-          page: searchParams.get("page") ? Number(searchParams.get("page")) : 1,
+          page: 1,
           topic,
           author,
         });
@@ -24,23 +25,21 @@ const ListBlog = () => {
       }
     }
     fetchData();
-  }, [searchParams, topic, author]);
+  }, [topic, author]);
 
   return (
-    <>
+    <div className="flex flex-col gap-4 min-h-[550px]">
+      <div className="flex items-center justify-between">
+        <h1 className="font-medium text-lg">Danh sách bài viết</h1>
+      </div>
       {blogs?.length ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
-          {blogs.map((blog: any) => (
-            <BlogIntro blog={blog} key={blog.id} />
-          ))}
-        </div>
+        <Blogs blogs={blogs} />
       ) : (
         <div className="flex items-center justify-center flex-1 text-gray-700">
           <span>Không tìm thấy bài viết nào</span>
         </div>
       )}
-      {/* <PaginationBlog searchParams={searchParams} listPage={blogs} /> */}
-    </>
+    </div>
   );
 };
 

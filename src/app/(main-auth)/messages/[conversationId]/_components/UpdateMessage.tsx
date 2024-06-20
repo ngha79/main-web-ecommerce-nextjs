@@ -1,18 +1,12 @@
-import { Button } from "@/components/ui/button";
-import http from "@/lib/http";
-import { ResponseExceptions } from "@/lib/utils";
-import { IConversation, IMessage } from "@/types/conversations";
-import { useConversationStore } from "@/utils/store/conversation-store";
-import {
-  Image as ImageIcon,
-  SendHorizontal,
-  ShoppingCart,
-  Smile,
-  Ticket,
-} from "lucide-react";
-import { useParams } from "next/navigation";
-import React, { useState } from "react";
 import { toast } from "sonner";
+import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import { SendHorizontal, Smile } from "lucide-react";
+
+import http from "@/lib/http";
+import { Button } from "@/components/ui/button";
+import { ResponseExceptions } from "@/lib/utils";
+import { IMessage } from "@/types/conversations";
 
 const UpdateMessage = ({
   message,

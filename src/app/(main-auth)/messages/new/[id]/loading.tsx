@@ -1,8 +1,8 @@
 import React from "react";
 
-const Loading = () => {
+const Loading = async () => {
   return (
-    <div className="flex-1 relative min-h-screen">
+    <div className="flex-1 relative">
       <div
         role="status"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"

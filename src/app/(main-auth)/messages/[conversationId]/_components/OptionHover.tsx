@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Pen, Reply, Smile } from "lucide-react";
+import { useParams } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import {
   HoverCard,
@@ -13,7 +15,6 @@ import MessageOptions from "./MessageOptions";
 import { cn } from "@/lib/utils";
 import UpdateMessage from "./UpdateMessage";
 import { useConversationStore } from "@/utils/store/conversation-store";
-import { useParams } from "next/navigation";
 import MessageReply from "./MessageReply";
 
 interface OptionHoverProps {

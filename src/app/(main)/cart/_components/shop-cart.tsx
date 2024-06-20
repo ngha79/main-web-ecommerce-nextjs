@@ -46,7 +46,7 @@ const ShopCart = ({
         />
         <div className="flex gap-2 bg-transparent">
           <Link
-            href={`/profile/${cartItem.shop.id}`}
+            href={`/shop/${cartItem.shop.id}`}
             className="flex items-center gap-2"
           >
             <Store size={18} />

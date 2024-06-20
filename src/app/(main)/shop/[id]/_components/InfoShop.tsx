@@ -40,16 +40,16 @@ const InfoShop = async ({ params }: { params: { id: string } }) => {
           </div>
           <div className="mx-auto mb-5 mt-4 text-sm font-medium grid max-w-96 grid-cols-4 rounded-md border border-slate-300 py-2.5 shadow-md">
             <div className="border-r px-2 line-clamp-1">
-              {+shop?.productCount} Sản phẩm
+              {shop?.productcount} Sản phẩm
             </div>
             <div className="border-r px-2 line-clamp-1 ">
-              {+shop?.followersCount} Followers
+              {shop?.followerscount} Followers
             </div>
             <div className="border-r px-2 line-clamp-1 ">
-              {+shop?.totalCommentCount} Đánh giá
+              {shop?.totalcommentcount} Đánh giá
             </div>
             <div className="px-2 line-clamp-1 ">
-              {+shop?.totalLikeCount} Lượt thích
+              {shop?.totallikecount} Lượt thích
             </div>
           </div>
           <div className="flex items-center justify-center max-w-64 mx-auto gap-6 font-medium">

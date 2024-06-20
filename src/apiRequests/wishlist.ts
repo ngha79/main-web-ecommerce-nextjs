@@ -1,9 +1,10 @@
 import http from "@/lib/http";
+import { IResponsePagination } from "@/utils/types/response-pagination";
 
 const wishlistApiRequest = {
-  getWishlist: (url: { page: string; limit: number; search: string }) => {
+  getWishlist: (url: { page: number; limit: number; search: string }) => {
     const { limit, page, search } = url;
-    return http.get<any>(
+    return http.get<IResponsePagination>(
       `/wishlist?page=${page}&limit=${limit}&search=${search}`,
       {
         token: true,

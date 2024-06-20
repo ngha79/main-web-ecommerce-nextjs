@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Github, Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   AuthLoginCredentialsValidator,
   IAuthLoginCredentialsValidator,
@@ -13,10 +15,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { cn, ResponseExceptions } from "@/lib/utils";
 import authApiRequest from "@/apiRequests/auth";
 import { login } from "@/utils/actions/account";
+import { HttpError } from "@/lib/http";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -44,7 +46,11 @@ const LoginForm = () => {
         router.replace("/");
         router.refresh();
       } catch (error: any) {
-        toast.error(error?.payload?.message ?? "Lỗi không xác định");
+        if (error instanceof HttpError) {
+          toast.error(error.payload.message);
+        } else {
+          toast.error(ResponseExceptions.DEFAULT_ERROR);
+        }
       }
     });
   };

@@ -1,10 +1,10 @@
 "use client";
 
-import Conversations from "./Conversations";
 import React from "react";
+import Conversations from "./Conversations";
+import { Skeleton } from "@/components/ui/skeleton";
 import GetNextConversation from "./GetNextConversation";
 import { useConversationStore } from "@/utils/store/conversation-store";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const ListConversation = () => {
   const isLoading = useConversationStore((state) => state.isLoading);

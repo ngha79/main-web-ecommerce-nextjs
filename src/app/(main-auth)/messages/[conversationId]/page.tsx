@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 import { IConversation } from "@/types/conversations";
 import http, { HttpError } from "@/lib/http";
-import ConversationLayout from "./_components/ConversationLayout";
 import { useConversationStore } from "@/utils/store/conversation-store";
-import { useParams, useRouter } from "next/navigation";
 import Header from "./_components/Header";
 import Messages from "./_components/Messages";
 import CreateMessage from "./_components/CreateMessage";
